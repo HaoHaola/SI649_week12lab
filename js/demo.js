@@ -21,7 +21,9 @@ d3.select('#demo-1')
 
 // TODO: change the text above to add your name
 // TODO: change the color to something else you like // keep in mind color contrast
-
+d3.select('#demo-1')
+    .style('color', 'purple')
+    .text('My name is Stanley');
 
 // Create and append new elements
 d3.select('#demo-1')
@@ -30,7 +32,10 @@ d3.select('#demo-1')
     .style('background-color', 'lightgray');
 
 // TODO: append a new element with your favorite food and style it with a different background color
-
+d3.select('#demo-1')
+    .append('p')
+    .text('My fav is chocolate and matcha')
+    .style('background-color', 'Lightgreen');
 // ============================================================================
 // SECTION 2: DATA BINDING - The Core D3 Pattern 
 // ============================================================================
@@ -46,7 +51,7 @@ const gasPrices = sampledData.map(item => parseFloat(item.gas));
 
 // Now let's see how we bind this data to elements
 d3.select('#demo-2')
-    .append('svg')
+    .append('svg') //append image use svg
     .attr('width', 400) // Set width of the SVG
     .attr('height', 100) // Set height of the SVG
     .selectAll('circle') // Select circles (we don't have them yet) - we select circles that don't exist yet to tell D3 what kind of elements to create
@@ -61,7 +66,18 @@ d3.select('#demo-2')
 // TODO: sample electricity prices instead of gas and create rectangles instead of circles; make the color of the rectangles green;
 const electricityPrices = sampledData.map(item => parseFloat(item.elec));
 // YOUR CODE GOES HERE 
-
+d3.select('#demo-2')
+    .append('svg')
+    .attr('width', 400)
+    .attr('height', 200)
+    .selectAll('rect')
+    .data(electricityPrices)
+    .join('rect')
+    .attr('x', (d, i) => i*60+30)
+    .attr('y', d=>100 - d*100)
+    .attr('width', 40)
+    .attr('height', d=> d*100)
+    .attr('fill', 'green')
 // Remember that circle needs radius (r) and center (cx, cy) to create it,
 // while rectangles need x, y, width, and height. You can use the electricity price to determine the height of the rectangle and set a fixed width.
 
@@ -101,7 +117,7 @@ console.log('colorScale("A") =', colorScale('A'));  // Should be 'red'
 const data = await d3.csv('data/state_energy_prices.csv');
 console.log('Loaded data:', data);
 
-// Now let's create a bar chart with top 15 states by electricity price 
+// Now let's create a bar chart with top 15 states by electricity price
 energyData.sort((a, b) => parseFloat(b.elec) - parseFloat(a.elec)); // Sort data by electricity price (descending)
 let top15 = energyData.slice(0, 15); // Get top 15 states
 top15 = top15.map(d => ({ state: d.state, elec: parseFloat(d.elec) })); // Convert electricity price to number and keep only state and electricity
@@ -168,12 +184,12 @@ barSvg.selectAll('rect')
     .attr('height', d => barHeight - yBar(d.elec)) // Set height of bars based on electricity price
     .attr('fill', 'steelblue') // Set bar color
 
-// Chart title 
+// Chart title
 barSvg.append('text')
     .attr('x', barWidth / 2) // Center the title horizontally
     .attr('y', -10) // Position the title above the chart
     .attr('text-anchor', 'middle') // Center the text
-    .style('font-size', '16px') 
+    .style('font-size', '16px')
     .style('font-weight', 'bold')
     .text('Top 15 States by Electricity Price');
 
@@ -219,7 +235,7 @@ const hBarHeight = 500 - hBarMargin.top - hBarMargin.bottom;
 
 
 // ============================================================================
-// SECTION 5:  LINE CHART 
+// SECTION 5:  LINE CHART
 // ============================================================================
 // This mirrors the pattern you'll use in the stocks assignment!
 
