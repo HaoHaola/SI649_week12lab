@@ -19,8 +19,8 @@ let stocks = await Promise.all([
     d3.csv("data/AAPL.csv").then(data => ({ name: "AAPL", values: data })),
     d3.csv("data/GOOG.csv").then(data =>({ name: "GOOG", values: data})),
     d3.csv("data/AMZN.csv").then(data =>({ name: "AMZN", values: data})),
-    d3.csv("data/IBM.csv").then(data =>({ name: "IBM", values: data})),
     d3.csv("data/MSFT.csv").then(data =>({ name: "MSFT", values: data})),
+    d3.csv("data/IBM.csv").then(data =>({ name: "IBM", values: data})),
     // TODO: Load GOOG.csv with name "GOOG"
     // TODO: Load AMZN.csv with name "AMZN"
     // TODO: LOAD IBM.csv with name "IBM"
@@ -97,7 +97,7 @@ const allValues = stocks.flatMap(s => s.values);
 // Hint: Look at demo.js Section 5 for the pattern
 const x = d3.scaleUtc()
     .domain(/* TODO: Define domain for x axis */d3.extent(allValues, d => d.Date))
-    .range(/* TODO: Define width range in pixels */[0, Width]);
+    .range(/* TODO: Define width range in pixels */[0, width]);
 
 // Y Scale - Maps prices to vertical positions
 // TODO: Create a linear scale using d3.scaleLinear()
@@ -108,7 +108,7 @@ const y = d3.scaleLinear()
         // TODO: Get maximum Close price from all stocks
         d3.max(stocks, price => d3.max(price.values, d => d.Close))
     ])
-    .range(/* TODO: define height range in pixels */[Height, 0]);
+    .range(/* TODO: define height range in pixels */[height, 0]);
 
 // Color Scale - Maps stock names to colors
 // TODO: Create an ordinal color scale
@@ -182,7 +182,7 @@ stocks.forEach(stock => {
 // TODO: Add a text element for the title
 svg.append('text')
     .attr('class', 'chart-title')
-    .attr('x', /* TODO: center the title */Width/2)
+    .attr('x', /* TODO: center the title */width/2)
     .attr('y', /* TODO: put the title above the chart */-10)
     .attr('text-anchor', 'middle')
     .style('font-size', '18px')
@@ -193,8 +193,8 @@ svg.append('text')
 // TODO: Add a label below the x-axis
 svg.append('text')
     .attr('class', 'x-axis-label')
-    .attr('x', /* TODO: center the label */Width/2)
-    .attr('y', /* TODO: put the label below x-xis */Height + 40)
+    .attr('x', /* TODO: center the label */width/2)
+    .attr('y', /* TODO: put the label below x-xis */height + 40)
     .attr('text-anchor', 'middle')
     .style('font-size', '14px')
     .text(/* TODO: add axis label */"Year");
@@ -204,11 +204,11 @@ svg.append('text')
 svg.append('text')
     .attr('class', 'y-axis-label')
     .attr('transform', /* TODO: 'rotate(-90)' */"rotate(-90)")
-    .attr('x', /* TODO: center the label */-Height/2)
+    .attr('x', /* TODO: center the label */-height/2)
     .attr('y', /* TODO: put the label to the left of y-axis */-60)
     .attr('text-anchor', 'middle')
     .style('font-size', '14px')
-    .text(/* TODO: add axis label */'Price (USD)');
+    .text(/* TODO: add axis label */'Closing Price (USD)');
 
 
 // ============================================================================
